@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.hzitxx.hitao.mapper.ShopMemberMapper">
+    <!-- 添加会员 -->
+    <insert id="addShopMember" parameterType="com.hzitxx.hitao.entity.ShopMember">
+    insert into shop_member (<include refid="basesql"></include>
+	)
+	values(
+	#{memberId},
+	#{memberName},
+	#{memberTruename},
+	#{memberAvatar},
+	#{memberSex},
+	#{memberBirthday},
+	#{memberPassword},
+	#{passwordSalt},
+	#{memberEmail},
+	#{memberLoginNum},
+	#{memberTime},
+	#{memberLoginTime},
+	#{memberOldLoginTime},
+	#{memberLoginIp},
+	#{memberOldLoginIp},
+	#{memberPoints},
+	#{memberMobile},
+	#{availablePredeposit},
+	#{freezePredeposit},
+	#{informAllow},
+	#{isBuy},
+	#{isAllowtalk},
+	#{memberState},
+	#{memberCredit},
+	#{memberAreaid},
+	#{memberCityid},
+	#{memberProvinceid},
+	#{memberAreainfo},
+	#{isDel},
+	#{isSorf}
+	)
+      
+    </insert>
+  <!-- 查询所有会员 -->
+  <select id="selectShopMember" resultMap="mem">
+	SELECT
+	<include refid="basesql" />
+	FROM shop_member
+  </select>
+  <!-- 登陆验证(用户名+密码) -->
+  <select id="checkShopMember" parameterType="map" resultMap="mem">
+	SELECT <include refid="basesql" /> FROM shop_member where  member_name = #{memberName} and 	member_password = #{memberPassword};
+	
+  </select>
+  <!-- 修改会员 -->  
+  <update id="updateShopMember" parameterType="com.hzitxx.hitao.entity.ShopMember">
+	UPDATE shop_member
+	<set>
+		<if test="memberId != null">
+			member_id = #{memberId},
+		</if>
+		<if test="memberName != null">
+			member_name = #{memberName},
+		</if>
+		<if test="memberTruename != null">
+			member_truename = #{memberTruename},
+		</if>
+		<if test="memberAvatar != null">
+			member_avatar = #{memberAvatar},
+		</if>
+		<if test="memberSex != null">
+			member_sex = #{memberSex},
+		</if>
+		<if test="memberBirthday != null">
+			member_birthday = #{memberBirthday},
+		</if>
+		<if test="memberPassword != null">
+			member_password = #{memberPassword},
+		</if>
+		<if test="passwordSalt != null">
+			password_salt = #{passwordSalt},
+		</if>
+		<if test="memberEmail != null">
+			member_email = #{memberEmail},
+		</if>
+		<if test="memberLoginNum != null">
+			member_login_num = #{memberLoginNum},
+		</if>
+		<if test="memberTime != null">
+			member_time = #{memberTime},
+		</if>
+		<if test="memberLoginTime != null">
+			member_login_time = #{memberLoginTime},
+		</if>
+		<if test="memberOldLoginTime != null">
+			member_old_login_time = #{memberOldLoginTime},
+		</if>
+		<if test="memberLoginIp != null">
+			member_login_ip = #{memberLoginIp},
+		</if>
+		<if test="memberOldLoginIp != null">
+			member_old_login_ip = #{memberOldLoginIp},
+		</if>
+		<if test="memberPoints != null">
+			member_points = #{memberPoints},
+		</if>
+		<if test="memberMobile != null">
+			member_mobile = #{memberMobile},
+		</if>
+		<if test="availablePredeposit != null">
+			available_predeposit = #{availablePredeposit},
+		</if>
+		<if test="freezePredeposit != null">
+			freeze_predeposit = #{freezePredeposit},
+		</if>
+		<if test="informAllow != null">
+			inform_allow = #{informAllow},
+		</if>
+		<if test="isBuy != null">
+			is_buy = #{isBuy},
+		</if>
+		<if test="isAllowtalk != null">
+			is_allowtalk = #{isAllowtalk},
+		</if>
+		<if test="memberState != null">
+			member_state = #{memberState},
+		</if>
+		<if test="memberCredit != null">
+			member_credit = #{memberCredit},
+		</if>
+		<if test="memberAreaid != null">
+			member_areaid = #{memberAreaid},
+		</if>
+		<if test="memberCityid != null">
+			member_cityid = #{memberCityid},
+		</if>
+		<if test="memberProvinceid != null">
+			member_provinceid = #{memberProvinceid},
+		</if>
+		<if test="memberAreainfo != null">
+			member_areainfo = #{memberAreainfo},
+		</if>
+		<if test="isDel != null">
+			is_del = #{isDel},
+		</if>
+		<if test="isSorf != null">
+			is_sorf = #{isSorf},
+		</if>
+	</set>
+	WHERE
+	member_id = #{memberId}
+  </update>
+  <!-- 删除会员 -->
+  <delete id="deleteShopMember" parameterType="int">
+	DELETE FROM shop_member WHERE
+	member_id = #{memberId}
+  </delete>
+  <!-- 根据id找一条会员数据 -->
+  <select id="findone" parameterType="int" resultMap="mem">
+    SELECT
+	<include refid="basesql" />
+	FROM shop_member where member_id=#{memberId}
+  </select>
+
+  <resultMap type="com.hzitxx.hitao.entity.ShopMember" id="mem">
+   <id column="member_id" property="memberId" />
+	<result column="member_name" property="memberName" />
+	<result column="member_truename" property="memberTruename" />
+	<result column="member_avatar" property="memberAvatar" />
+	<result column="member_sex" property="memberSex" />
+	<result column="member_birthday" property="memberBirthday" />
+	<result column="member_password" property="memberPassword" />
+	<result column="password_salt" property="passwordSalt" />
+	<result column="member_email" property="memberEmail" />
+	<result column="member_login_num" property="memberLoginNum" />
+	<result column="member_time" property="memberTime" />
+	<result column="member_login_time" property="memberLoginTime" />
+	<result column="member_old_login_time" property="memberOldLoginTime" />
+	<result column="member_login_ip" property="memberLoginIp" />
+	<result column="member_old_login_ip" property="memberOldLoginIp" />
+	<result column="member_points" property="memberPoints" />
+	<result column="member_mobile" property="memberMobile" />
+	<result column="available_predeposit" property="availablePredeposit" />
+	<result column="freeze_predeposit" property="freezePredeposit" />
+	<result column="inform_allow" property="informAllow" />
+	<result column="is_buy" property="isBuy" />
+	<result column="is_allowtalk" property="isAllowtalk" />
+	<result column="member_state" property="memberState" />
+	<result column="member_credit" property="memberCredit" />
+	<result column="member_areaid" property="memberAreaid" />
+	<result column="member_cityid" property="memberCityid" />
+	<result column="member_provinceid" property="memberProvinceid" />
+	<result column="member_areainfo" property="memberAreainfo" />
+	<result column="is_del" property="isDel" />
+	<result column="is_sorf" property="isSorf" />
+  </resultMap>
+  <sql id="basesql">
+	member_id,
+	member_name,
+	member_truename,
+	member_avatar,
+	member_sex,
+	member_birthday,
+	member_password,
+	password_salt,
+	member_email,
+	member_login_num,
+	member_time,
+	member_login_time,
+	member_old_login_time,
+	member_login_ip,
+	member_old_login_ip,
+	member_points,
+	member_mobile,
+	available_predeposit,
+	freeze_predeposit,
+	inform_allow,
+	is_buy,
+	is_allowtalk,
+	member_state,
+	member_credit,
+	member_areaid,
+	member_cityid,
+	member_provinceid,
+	member_areainfo,
+	is_del,
+	is_sorf
+  </sql>
+  </mapper>
