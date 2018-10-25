@@ -6,4 +6,19 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>hitaoapp_product</artifactId>
+  <!-- 子级特有的jar包 -->
+	<dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+		<!-- 引入公共项目 -->
+		<dependency>
+			<!-- 公司信息 -->
+			<groupId>com.hzitxx.hitaoapp</groupId>
+			<artifactId>hitaoapp_commons</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 </project>

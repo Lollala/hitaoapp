@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.hzitxx.hitao.mapper.ShopFavoritesMapper">
+  <!-- 增加 -->
+  <insert id="addShopFavorites">
+  INSERT into shop_favorites (goods_id,member_id,fav_type,goods_name,goods_jingle,main_image,fav_time)
+  VALUES (#{goodsId},#{memberId},#{favType},#{goodsName},#{goodsJingle},#{mainImage},#{favTime})
+  </insert>
+  <!-- 更新 -->
+  <update id="updateShopFavorites" parameterType="com.hzitxx.hitao.entity.ShopFavorites">
+  UPDATE shop_favorites set goods_id=#{goodsId},goods_name=#{goodsName},
+  member_id=#{memberId},fav_type=#{favType},goods_jingle=#{goodsJingle},
+  main_image=#{mainImage} WHERE fav_id=#{favId}
+  </update>
+  <!-- 删除 -->
+  <delete id="deleteShopFavorites" parameterType="int">
+  delete from shop_favorites where fav_id=#{favId}
+  </delete>
+  <!-- 查询一条数据 -->
+  <select id="findone" parameterType="int" resultMap="shopfa">
+  SELECT 
+  <include refid="basesql"></include>
+   from shop_favorites WHERE fav_id=#{favId}
+  </select>
+  <!-- 根据goodsId查询是否收藏商品 -->
+  <select id="findbyGoodsId" parameterType="int" resultMap="shopfa">
+  SELECT <include refid="basesql"></include>  
+  from shop_favorites WHERE goods_id=#{goodsId};
+  </select>
+  <!-- 查询所有数据 -->
+  <select id="selectShopFavorites" resultMap="shopfa">
+  SELECT 
+  <include refid="basesql"></include>
+   from shop_favorites
+  </select>
+  <resultMap type="com.hzitxx.hitao.entity.ShopFavorites" id="shopfa">
+  <id column="fav_id" property="favId"/>
+  <result column="goods_id" property="goodsId"/>
+  <result column="member_id" property="memberId"/>
+  <result column="fav_type" property="favType"/>
+  <result column="goods_name" property="goodsName"/>
+  <result column="goods_jingle" property="goodsJingle"/>
+  <result column="main_image" property="mainImage"/>
+  <result column="fav_time" property="favTime"/>
+  </resultMap>
+  <sql id="basesql">
+  fav_id,goods_id,member_id,fav_type,goods_name,goods_jingle,main_image,fav_time
+  </sql>
+  </mapper>

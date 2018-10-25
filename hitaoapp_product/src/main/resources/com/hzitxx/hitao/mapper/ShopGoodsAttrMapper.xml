@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.hzitxx.hitao.mapper.ShopGoodsAttrMapper">
+  <!-- 添加 -->
+  <insert id="addShopGoodsAttr" parameterType="com.hzitxx.hitao.entity.ShopGoodsAttr">
+   INSERT INTO shop_goods_attr(
+         goods_id,
+         cat_id,
+         attr_id,
+         attr_value,
+         is_del,
+         created_time
+        ) VALUES(
+                #{goodsId},
+                #{catId},
+                #{attrId},
+                #{attrValue},
+                #{isDel},
+                #{createdTime}
+        )
+  </insert>
+  <!-- 修改 -->
+  <update id="updateShopGoodsAttr" parameterType="com.hzitxx.hitao.entity.ShopGoodsAttr">
+  UPDATE shop_goods_attr
+        <set>
+    <if test="goodsId != null">
+          goods_id = #{goodsId},
+    </if>
+    <if test="catId != null">
+          cat_id = #{catId},
+    </if>
+    <if test="attrId != null">
+          attr_id = #{attrId},
+    </if>
+    <if test="attrValue != null">
+          attr_value = #{attrValue},
+    </if>
+    <if test="isDel != null">
+          is_del = #{isDel},
+    </if>
+    <if test="updatedTiime != null">
+          updated_tiime = #{updatedTiime},
+    </if>
+    </set>
+        WHERE
+      goods_id = #{goodsId}
+  </update>
+  <!-- 删除 -->
+  <delete id="deleteShopGoodsAttr" parameterType="integer">
+        DELETE FROM  shop_goods_attr WHERE
+        goods_id = #{goodsId}
+    </delete>
+  <!-- 查询一条 -->
+  <select id="findone" resultMap="attr">
+        SELECT
+        <include refid="basesql"/>
+        FROM shop_goods_attr where goods_id=#{goodsId}
+  </select>
+  <!-- 查询所有 -->
+  <select id="selectShopGoodsAttr" resultMap="attr">
+        SELECT
+        <include refid="basesql"/>
+        FROM shop_goods_attr
+  </select>
+  <resultMap type="com.hzitxx.hitao.entity.ShopGoodsAttr" id="attr">
+            <id column="goods_id" property="goodsId"/>
+            <result column="cat_id" property="catId"/>
+            <result column="attr_id" property="attrId"/>
+            <result column="attr_value" property="attrValue"/>
+            <result column="is_del" property="isDel"/>
+            <result column="created_time" property="createdTime"/>
+            <result column="updated_tiime" property="updatedTiime"/>
+  </resultMap>
+  <sql id="basesql">
+         goods_id,
+         cat_id,
+         attr_id,
+         attr_value,
+         is_del,
+         created_time,
+         updated_tiime
+  </sql>
+  </mapper>
