@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -38,7 +39,13 @@ public class ShopAddressServiceImpl implements ShopAddressService {
 	}
 
 	@Override
+	@Transactional
 	public ServerResponse<?> addShopAddress(ShopAddress shopAddress) {
+		if(shopAddress.getIsDefault()==1) {
+			ShopAddress isDefault=new ShopAddress();
+			isDefault.setIsDefault(0);
+			shopAddressMapper.updateShopAddress(isDefault);
+		}
 		int result=shopAddressMapper.addShopAddress(shopAddress);
 		if(result!=1) {
 			return ServerResponse.createByErrorMessage("添加失败！");
@@ -47,7 +54,13 @@ public class ShopAddressServiceImpl implements ShopAddressService {
 	}
 
 	@Override
+	@Transactional
 	public ServerResponse<?> updateShopAddress(ShopAddress shopAddress) {
+		if(shopAddress.getIsDefault()==1) {
+			ShopAddress isDefault=new ShopAddress();
+			isDefault.setIsDefault(0);
+			shopAddressMapper.updateShopAddress(isDefault);
+		}
 		int result=shopAddressMapper.updateShopAddress(shopAddress);
 		if(result!=1) {
 			return ServerResponse.createByErrorMessage("修改失败！");
@@ -64,4 +77,14 @@ public class ShopAddressServiceImpl implements ShopAddressService {
 		return ServerResponse.createBySuccessMessage("删除成功！");
 	}
 
+	@Override
+	public ServerResponse<List<ShopAddress>> getAddressList(Map<String, Object> map) {
+		return ServerResponse.createBySuccess("查询成功！",shopAddressMapper.findShopAddress(map));
+	}
+
+	@Override
+	public ServerResponse<ShopAddress> getOneAddress(Map<String, Object> map) {
+		
+		return ServerResponse.createBySuccess("查询成功！",shopAddressMapper.findOneShopAddress(map));
+	}
 }

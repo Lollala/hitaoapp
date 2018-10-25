@@ -17,6 +17,13 @@ public interface ShopAddressMapper {
 	 * @return
 	 */
 	public List<ShopAddress> findShopAddress(Map<String,Object> map);
+	
+	/**
+	 * 查询一条
+	 * @param map
+	 * @return
+	 */
+	public ShopAddress findOneShopAddress(Map<String,Object> map);
 	/**
 	 * 添加买家地址
 	 * @param shopAddress

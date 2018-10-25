@@ -28,7 +28,7 @@ public interface ShopFavoritesMapper {
 	 * @param favId
 	 * @return
 	 */
-	int deleteShopFavorites(Integer favId);
+	int deleteShopFavorites(Map<String,Object> map);
 	/**
 	 * 查询一条数据
 	 * @param favId

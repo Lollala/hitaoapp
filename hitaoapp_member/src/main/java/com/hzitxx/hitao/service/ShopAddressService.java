@@ -5,6 +5,7 @@ package com.hzitxx.hitao.service;
  *
  */
 
+import java.util.List;
 import java.util.Map;
 
 import com.hzitxx.hitao.entity.ShopAddress;
@@ -38,4 +39,16 @@ public interface ShopAddressService {
 	 * @return
 	 */
 	public ServerResponse<?> deleteShopAddress(Integer id);
+	/**
+	 * 获取收获地址列表
+	 * @param map
+	 * @return
+	 */
+	public ServerResponse<List<ShopAddress>> getAddressList(Map<String,Object> map);
+	/**
+	 * 获取一个收获地址
+	 * @param map
+	 * @return
+	 */
+	public ServerResponse<ShopAddress> getOneAddress(Map<String,Object> map);
 }

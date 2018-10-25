@@ -105,5 +105,6 @@
   	<module>hitaoapp_product</module>
   	<module>hitaoapp_serach</module>
   	<module>hitaoapp_member</module>
+  	<module>hitaoapp_images</module>
   </modules>
 </project>
