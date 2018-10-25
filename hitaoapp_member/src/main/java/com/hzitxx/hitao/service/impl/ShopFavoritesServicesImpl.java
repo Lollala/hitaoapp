@@ -35,8 +35,8 @@ public class ShopFavoritesServicesImpl implements ShopFavoritesService {
 	 * 删除
 	 */
 	@Override
-	public ServerResponse<Integer> deleteFavorites(Integer favId) {
-		int result = mapper.deleteShopFavorites(favId);
+	public ServerResponse<Integer> deleteFavorites(Map<String,Object> map) {
+		int result = mapper.deleteShopFavorites(map);
 		if (result != 1) {
 			return ServerResponse.createByErrorMessage("删除失败");
 		}

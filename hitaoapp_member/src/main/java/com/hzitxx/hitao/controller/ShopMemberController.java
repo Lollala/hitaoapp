@@ -21,7 +21,6 @@ import com.hzitxx.hitao.utils.ServerResponse;
  *
  */
 @RestController
-@RequestMapping("/member")
 public class ShopMemberController {
 	@Autowired
 	private ShopMemberService service;
@@ -72,15 +71,9 @@ public class ShopMemberController {
 	 * @param shopMember
 	 * @return
 	 */
-	@PostMapping("/update")
-	public ServerResponse<String> update(@RequestBody ShopMember shopMember) {
-		try {
-			shopMember.setMemberPassword(Md5Util.getMD5(Md5Util.getMD5(shopMember.getMemberPassword())));
-		} catch (Exception e) {
-			return ServerResponse.createByErrorMessage("更新失败！");
-		}
-		service.updateShopMember(shopMember);
-		return ServerResponse.createBySuccessMessage("更新成功!");
+	@PostMapping("/saveMemberInfo")
+	public ServerResponse<Integer> update(@RequestBody ShopMember shopMember) {
+		return service.updateShopMember(shopMember);
 	}
 
 	/**

@@ -27,7 +27,6 @@ import com.hzitxx.hitao.utils.ServerResponse;
  * @author WE1
  *
  */
-@RequestMapping("/member")
 @RestController
 public class LogInOutController {
 	@Autowired

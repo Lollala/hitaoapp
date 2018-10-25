@@ -2,49 +2,73 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="com.hzitxx.hitao.mapper.ShopFavoritesMapper">
-  <!-- 增加 -->
-  <insert id="addShopFavorites">
-  INSERT into shop_favorites (goods_id,member_id,fav_type,goods_name,goods_jingle,main_image,fav_time)
-  VALUES (#{goodsId},#{memberId},#{favType},#{goodsName},#{goodsJingle},#{mainImage},#{favTime})
-  </insert>
-  <!-- 更新 -->
-  <update id="updateShopFavorites" parameterType="com.hzitxx.hitao.entity.ShopFavorites">
-  UPDATE shop_favorites set goods_id=#{goodsId},goods_name=#{goodsName},
-  member_id=#{memberId},fav_type=#{favType},goods_jingle=#{goodsJingle},
-  main_image=#{mainImage} WHERE fav_id=#{favId}
-  </update>
-  <!-- 删除 -->
-  <delete id="deleteShopFavorites" parameterType="int">
-  delete from shop_favorites where fav_id=#{favId}
-  </delete>
-  <!-- 查询一条数据 -->
-  <select id="findone" parameterType="int" resultMap="shopfa">
-  SELECT 
-  <include refid="basesql"></include>
-   from shop_favorites WHERE fav_id=#{favId}
-  </select>
-  <!-- 查询所有数据 -->
-  <select id="selectShopFavorites" resultMap="shopfa">
-  SELECT 
-  <include refid="basesql"></include>
-   from shop_favorites
-  </select>
-  <!-- 根据memberid获取总数 -->
-  <select id="getTotalByMemberId" parameterType="Integer" resultType="Integer">
-  select count(1) from shop_favorites where member_id=#{memberId}
-  </select>
-  <resultMap type="com.hzitxx.hitao.entity.ShopFavorites" id="shopfa">
-  <id column="fav_id" property="favId"/>
-  <result column="goods_id" property="goodsId"/>
-  <result column="member_id" property="memberId"/>
-  <result column="fav_type" property="favType"/>
-  <result column="goods_name" property="goodsName"/>
-  <result column="goods_jingle" property="goodsJingle"/>
-  <result column="main_image" property="mainImage"/>
-  <result column="fav_time" property="favTime"/>
-  </resultMap>
-  <sql id="basesql">
-  fav_id,goods_id,member_id,fav_type,goods_name,goods_jingle,main_image,fav_time
-  </sql>
-  </mapper>
+<mapper namespace="com.hzitxx.hitao.mapper.ShopFavoritesMapper">
+	<!-- 增加 -->
+	<insert id="addShopFavorites">
+		INSERT into shop_favorites
+		(goods_id,member_id,fav_type,goods_name,goods_jingle,main_image,fav_time)
+		VALUES (#{goodsId},#{memberId},#{favType},(select goods_name from
+		shop_goods where goods_id =#{goodsId}),(select goods_jingle from
+		shop_goods
+		where goods_id =#{goodsId}),(select main_image from
+		shop_goods where goods_id
+		=#{goodsId}),#{favTime})
+	</insert>
+	<!-- 更新 -->
+	<update id="updateShopFavorites"
+		parameterType="com.hzitxx.hitao.entity.ShopFavorites">
+		UPDATE shop_favorites set
+		goods_id=#{goodsId},goods_name=#{goodsName},
+		member_id=#{memberId},fav_type=#{favType},goods_jingle=#{goodsJingle},
+		main_image=#{mainImage} WHERE fav_id=#{favId}
+	</update>
+	<!-- 删除 -->
+	<delete id="deleteShopFavorites" parameterType="map">
+		delete from
+		shop_favorites
+		<where>
+			<if test="favId!=null and favId!=''">and fav_id=#{favId}</if>
+			<if test="favType!=null and favType!=''">and fav_type=#{favType}</if>
+			<if test="goodsId!=null and goodsId!=''">and goods_id=#{goodsId}</if>
+			<if test="memberId!=null and memberId!=''">and member_id=#{memberId}</if>
+		</where>
+	</delete>
+	<!-- 查询一条数据 -->
+	<select id="findone" parameterType="int" resultMap="shopfa">
+		SELECT
+		<include refid="basesql"></include>
+		from shop_favorites WHERE fav_id=#{favId}
+	</select>
+	<!-- 查询所有数据 -->
+	<select id="selectShopFavorites" parameterType="map"
+		resultMap="shopfa">
+		SELECT
+		<include refid="basesql"></include>
+		from shop_favorites
+		<where>
+			<if test="memberId!=null and memberId!=''">
+				member_id=#{memberId}
+			</if>
+		</where>
+	</select>
+	<!-- 根据memberid获取总数 -->
+	<select id="getTotalByMemberId" parameterType="Integer"
+		resultType="Integer">
+		select count(1) from shop_favorites where
+		member_id=#{memberId}
+	</select>
+	<resultMap type="com.hzitxx.hitao.entity.ShopFavorites"
+		id="shopfa">
+		<id column="fav_id" property="favId" />
+		<result column="goods_id" property="goodsId" />
+		<result column="member_id" property="memberId" />
+		<result column="fav_type" property="favType" />
+		<result column="goods_name" property="goodsName" />
+		<result column="goods_jingle" property="goodsJingle" />
+		<result column="main_image" property="mainImage" />
+		<result column="fav_time" property="favTime" />
+	</resultMap>
+	<sql id="basesql">
+		fav_id,goods_id,member_id,fav_type,goods_name,goods_jingle,main_image,fav_time
+	</sql>
+</mapper>

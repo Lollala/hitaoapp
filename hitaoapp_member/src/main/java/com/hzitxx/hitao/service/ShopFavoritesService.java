@@ -28,7 +28,7 @@ public interface ShopFavoritesService {
 	 * @param favId
 	 * @return
 	 */
-	ServerResponse<Integer> deleteFavorites(Integer favId);
+	ServerResponse<Integer> deleteFavorites(Map<String,Object> map);
 
 	/**
 	 * 修改

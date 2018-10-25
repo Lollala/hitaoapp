@@ -14,10 +14,38 @@
 				member_name like concat(#{memberName},'%')
 			</if>
 			<if test="isDefault!=null and isDefault!=''">
-			is_default=#{isDefault} and member_id=#{memberId}
+				and is_default=#{isDefault}
+			</if>
+			<if test="memberId!=null and memberId!=''">
+				and member_id=#{memberId}
+			</if>
+			<if test="id!=null and id!=''">
+				and id=#{id}
 			</if>
 		</where>
 	</select>
+	<!-- 查询一条 -->
+	<select id="findOneShopAddress" parameterType="map"
+		resultMap="shopAddressMap">
+		select id,
+		<include refid="all" />
+		from shop_address
+		<where>
+			<if test="memberName!=null and memberName!=''">
+				member_name like concat(#{memberName},'%')
+			</if>
+			<if test="isDefault!=null and isDefault!=''">
+				and is_default=#{isDefault}
+			</if>
+			<if test="memberId!=null and memberId!=''">
+				and member_id=#{memberId}
+			</if>
+			<if test="id!=null and id!=''">
+				and id=#{id}
+			</if>
+		</where>
+	</select>
+
 
 	<!-- 添加 -->
 	<insert id="addShopAddress"
@@ -30,14 +58,52 @@
 
 	<!-- 修改 -->
 	<update id="updateShopAddress">
-		update shop_address set member_id=#{memberId},member_name=#{memberName},province_id=#{provinceId},city_id=#{cityId},district_id=#{districtId},full_region=#{fullRegion},address=#{address},tel_number=#{telNumber},post_code=#{postCode},is_default=#{isDefault} where id=#{id}
+		update shop_address
+		<set>
+			<if test="memberId != null">
+				member_id = #{memberId},
+			</if>
+			<if test="memberName != null">
+				member_name = #{memberName},
+			</if>
+			<if test="provinceId != null">
+				province_id = #{provinceId},
+			</if>
+			<if test="cityId != null">
+				city_id = #{cityId},
+			</if>
+			<if test="districtId != null">
+				district_id = #{districtId},
+			</if>
+			<if test="fullRegion != null">
+				full_region = #{fullRegion},
+			</if>
+			<if test="address != null">
+				address = #{address},
+			</if>
+			<if test="telNumber != null">
+				tel_number = #{telNumber},
+			</if>
+			<if test="postCode != null">
+				post_code = #{postCode},
+			</if>
+			<if test="isDefault != null">
+				is_default = #{isDefault}
+			</if>
+		</set>
+		<where>
+			<if test="id!=null and id!=''">
+				 id=#{id}
+			</if>
+		</where>
 	</update>
-	
+
 	<!-- 物理删除 -->
 	<delete id="deleteShopAddress" parameterType="Integer">
-	delete from shop_address where id=#{id}
+		delete from
+		shop_address where id=#{id}
 	</delete>
-	
+
 
 	<sql id="all">
 		member_id,member_name,province_id,city_id,district_id,full_region,address,tel_number,post_code,is_default
