@@ -144,9 +144,9 @@ public class ShopGoodsController {
 		map.put("goodsContent", g3.getData());
 		map.put("goodsAttr",list);
 		if (g4.getData()!=null) {
-			map.put("isFavorites",1);//收藏
+			map.put("isFavorites",1);// 收藏
 		}else{
-			map.put("isFavorites",0);//不收藏
+			map.put("isFavorites",0);// 不收藏
 		}
 		return ServerResponse.createBySuccess(map);
 	}
