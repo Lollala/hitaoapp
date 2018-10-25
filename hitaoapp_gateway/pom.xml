@@ -6,4 +6,14 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>hitaoapp_gateway</artifactId>
+  <!-- 子级特有的jar包 -->
+	<dependencies>
+		<!-- 引入公共项目 -->
+		<dependency>
+			<!-- 公司信息 -->
+			<groupId>com.hzitxx.hitaoapp</groupId>
+			<artifactId>hitaoapp_commons</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 </project>
