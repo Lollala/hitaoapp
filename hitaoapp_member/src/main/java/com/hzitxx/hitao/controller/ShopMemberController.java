@@ -68,6 +68,7 @@ public class ShopMemberController {
 			try {
 				shopMember.setMemberPassword(Md5Util.getMD5(Md5Util.getMD5(shopMember.getMemberPassword())));
 				shopMember.setMemberTime(new Date());
+				shopMember.setMemberLoginNum(0);
 			} catch (Exception e) {
 				return ServerResponse.createByErrorMessage("注册失败!");
 			}
