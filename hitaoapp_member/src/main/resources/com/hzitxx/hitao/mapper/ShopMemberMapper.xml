@@ -52,7 +52,7 @@
 	SELECT <include refid="basesql" /> FROM shop_member 
 	<where>
 	<if test="memberName!=null and memberName!=''">member_name = #{memberName}</if>
-	<if test="memberPassword!=null and memberPassword!=''">member_password = #{memberPassword}</if>
+	<if test="memberPassword!=null and memberPassword!=''">and member_password = #{memberPassword}</if>
 	</where>
 
   </select>
