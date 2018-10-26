@@ -16,7 +16,7 @@ public class HyperLogLogController {
 	private HyperLogLogOperations<String, String> hyperLogLogOperations = redisTemplate.opsForHyperLogLog();//获取操作基数对象
 	
 	/**
-	 * 获取浏览IP总数
+	 * 获取浏览IP总数 
 	 * @return
 	 */
 	@GetMapping("/getVisitorNum")
