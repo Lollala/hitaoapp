@@ -134,9 +134,6 @@ public class ShopGoodsController {
 		ServerResponse<ShopGoodsAttr> g2 = service2.findone(Integer.parseInt(goodsId));//商品属性
 		ServerResponse<ShopGoodsContent> g3 = service3.findOne(Integer.parseInt(goodsId));//商品内容
 		ServerResponse<ShopFavorites> g4=service4.findByGoodsId(Integer.parseInt(goodsId));//是否是收藏商品
-		//System.out.println(g1.getData());
-		System.out.println(g2.getData().getAttrValue());
-		//System.out.println(g3.getData());
 		List<Goods1> list = new ArrayList<>();
 		list =JSON.parseArray(g2.getData().getAttrValue(),Goods1.class);
 		Map<String, Object> map = new HashMap<>();
