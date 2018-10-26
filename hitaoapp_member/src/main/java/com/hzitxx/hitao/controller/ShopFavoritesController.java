@@ -79,17 +79,20 @@ public class ShopFavoritesController {
 	 * @return
 	 */
 	@PostMapping("/addOrDelete")
-	public ServerResponse<Integer> addOrDelete(@RequestParam(value = "type", defaultValue = "0") Integer type,
+	public ServerResponse<String> addOrDelete(@RequestParam(value = "type", defaultValue = "0") Integer type,
 			@RequestBody ShopFavorites shopFavorites) {
+		System.out.println(type);
 		if (type==0) {
 			shopFavorites.setFavTime(new Date());
-			return service.addShopFavorites(shopFavorites);
+			service.addShopFavorites(shopFavorites);
+			return ServerResponse.createBySuccess("添加成功!", "add");
 		}else {
 			Map<String,Object> map=new HashMap<>();
 			map.put("favType", shopFavorites.getFavType());
 			map.put("goodsId", shopFavorites.getGoodsId());
 			map.put("memberId", shopFavorites.getMemberId());
-			return service.deleteFavorites(map);
+			service.deleteFavorites(map);
+			return ServerResponse.createBySuccess("取消收藏成功!", "cancel");
 		}
 	}
 
