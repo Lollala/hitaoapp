@@ -13,7 +13,6 @@ import com.hzitxx.hitao.utils.ServerResponse;
 public class HyperLogLogController {
 	@Resource(name = "redisTemplate")
 	private RedisTemplate<String, String> redisTemplate;
-	private HyperLogLogOperations<String, String> hyperLogLogOperations = redisTemplate.opsForHyperLogLog();//获取操作基数对象
 	
 	/**
 	 * 获取浏览IP总数 
@@ -21,6 +20,7 @@ public class HyperLogLogController {
 	 */
 	@GetMapping("/getVisitorNum")
 	public ServerResponse<Long> getVisitorNum() {
+		HyperLogLogOperations<String, String> hyperLogLogOperations = redisTemplate.opsForHyperLogLog();//获取操作基数对象
 		return ServerResponse.createBySuccess("访问ip总数", hyperLogLogOperations.size("visitorIp"));
 	}
 	
@@ -30,6 +30,7 @@ public class HyperLogLogController {
 	 */
 	@GetMapping("/getRegisterNum")
 	public ServerResponse<Long> getRegisterNum() {
+		HyperLogLogOperations<String, String> hyperLogLogOperations = redisTemplate.opsForHyperLogLog();//获取操作基数对象
 		return ServerResponse.createBySuccess("注册ip总数", hyperLogLogOperations.size("registerIp"));
 	}
 }
