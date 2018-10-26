@@ -1,13 +1,15 @@
 package com.hzitxx.hitao.controller;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hzitxx.hitao.entity.ShopMember;
@@ -15,8 +17,10 @@ import com.hzitxx.hitao.service.ShopMemberService;
 import com.hzitxx.hitao.utils.Md5Util;
 import com.hzitxx.hitao.utils.PageUtil;
 import com.hzitxx.hitao.utils.ServerResponse;
+
 /**
  * 会员 信息表
+ * 
  * @author WE1
  *
  */
@@ -57,12 +61,19 @@ public class ShopMemberController {
 	 */
 	@PostMapping("/register")
 	public ServerResponse<Integer> add(@RequestBody ShopMember shopMember) {
-		try {
-			shopMember.setMemberPassword(Md5Util.getMD5(Md5Util.getMD5(shopMember.getMemberPassword())));
-		} catch (Exception e) {
-			return ServerResponse.createByErrorMessage("注册失败!");
+		Map<String, String> map = new HashMap<>();
+		map.put("memberName", shopMember.getMemberName());
+		if (StringUtils.isEmpty(service.checkShopMember(map))) {
+
+			try {
+				shopMember.setMemberPassword(Md5Util.getMD5(Md5Util.getMD5(shopMember.getMemberPassword())));
+				shopMember.setMemberTime(new Date());
+			} catch (Exception e) {
+				return ServerResponse.createByErrorMessage("注册失败!");
+			}
+			return service.addShopMember(shopMember);
 		}
-		return service.addShopMember(shopMember);
+		return ServerResponse.createByErrorMessage("注册失败,用户存在!");
 	}
 
 	/**
